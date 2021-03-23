@@ -19,7 +19,9 @@
      swagger: {
          path:'/documentation'
      },
+     
      mapbox: {
-         apikey: process.env.MAPBOX_API_KEY
-     },
+        pathBase: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
+        apikey: process.env.MAPBOX_API_KEY
+    },
  }

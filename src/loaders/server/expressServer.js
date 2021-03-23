@@ -11,7 +11,7 @@ class ExpressServer {
     constructor(){
         this.app = express();
         this.port = config.port;
-        this.basePathUser = `${config.api.prefix}/users`;
+        this.basePathWeather = `${config.api.prefix}/weather`;
 
         this._middlewares();
 
@@ -35,7 +35,7 @@ class ExpressServer {
         this.app.head("/status", (req, res) =>{
             res.status(200).end();
         })
-        this.app.use(this.basePathUser,require('../../routes/users'))
+        this.app.use(this.basePathWeather,require('../../routes/weather'))
     }
 
     _notFound(){
@@ -51,7 +51,8 @@ class ExpressServer {
         this.app.use((err, req, res , next) => {
             const code = err.code || 500;
             logger.error(`${code} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
-            logger.error(err.stack);            
+            logger.error(err.stack);    
+
             const body = {
                 error: {
                     code,
