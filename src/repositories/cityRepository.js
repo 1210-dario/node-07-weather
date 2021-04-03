@@ -1,6 +1,7 @@
 const axios = require('axios');
-
 const config = require('../config');
+
+
 
 class CityRepository {
 
@@ -18,13 +19,12 @@ class CityRepository {
                 params: {
                     'access_token': this.apiKey,
                     'limit': this.limit,
-                    'language': this.language,
-    
-                },
-                headers: {'X-Custom-Header': 'foobar'}
+                    'language': this.language    
+                },    
               });
             
             const response = await instance.get();
+            
             return response.data;
 
         }catch(err){

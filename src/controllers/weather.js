@@ -1,9 +1,7 @@
 const express = require('express');
-
-const CityRepository = require('../repositories/cityRepository');
-const { response } = require('express');
-const repository = new CityRepository();
-
+const Success = require('../handlers/succesHandler');
+const {weatherByCoordinates: weatherByCoordinatesService,
+    weatherByCityId: weatherByCityIdService} = require('../services/weatherService');
 
 /**
  * 
@@ -11,13 +9,40 @@ const repository = new CityRepository();
  * @param {express.Response} res 
  */
 
-const cities = async (req, res) => {   
-    res.json(await repository.findCities(req.params.city));
+const weatherByCoordinates = async (req, res) => {   
+    try{
+    const {lon, lat} = req.query;
+
+    const weather = await weatherByCoordinatesService(lon, lat);
+    const succes = new Success(weather);
+    res.json(succes);
+    }catch(err){
+        next(err);
+    }
+};
+
+/**
+ * 
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+
+ const weatherByCityId  = async (req, res) => {   
+    try{
+    const {city, id} = req.params;
+
+    const weather = await weatherByCityIdService(city, id);
+    const succes = new Success(weather);
+    res.json(succes);
+    }catch(err){
+        next(err);
+    }
 };
 
 
 
 
-module.exports = {
-    cities,    
+module.exports = {    
+    weatherByCoordinates,
+    weatherByCityId    
 }
