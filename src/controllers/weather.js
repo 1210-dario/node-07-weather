@@ -29,8 +29,8 @@ const weatherByCoordinates = async (req, res) => {
 
  const weatherByCityId  = async (req, res) => {   
     try{
-    const {city, id} = req.params;
-
+    const id = req.params.id;
+    const city = req.params.city;
     const weather = await weatherByCityIdService(city, id);
     const succes = new Success(weather);
     res.json(succes);
